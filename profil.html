@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#22140d">
+  <title>Okur Profili · E-Kütüphane</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. HEADER: Giriş Sonrası Gezinme
+       (Anasayfa, Profil, Kütüphanem, Sonra Okuyacaklarım)
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="anasayfa.html" class="brand" aria-label="E-Kütüphane Anasayfa">
+        <span>E-Kütüphane</span>
+        <span class="brand-sub">Kişisel Kitap ve Okuma Arşivi</span>
+      </a>
+
+      <div class="header-right">
+        <nav class="nav-links" aria-label="Okur menüsü">
+          <a href="anasayfa.html" class="nav-link">Anasayfa</a>
+          <a href="profil.html" class="nav-link is-active" aria-current="page">Profil</a>
+          <a href="kutuphanem.html" class="nav-link" title="Okuduğunuz kitaplar">Kütüphanem</a>
+          <a href="sonra-okuyacaklarim.html" class="nav-link" title="Okumak istediğiniz kitapların listesi">Sonra Okuyacaklarım</a>
+        </nav>
+
+        <div class="auth-actions">
+          <a href="index.html" class="btn btn--ghost-dark">Çıkış Yap</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         2. OKUR PROFİLİ ALANI
+         - Profil fotoğrafı alanı olmadan sade tipografik yapı
+         - Üstte: Okunmuş Kitap ve Okunacak Kitap sayaçları
+         - Altta: İsim, Soyisim, E-posta ve Şifre bilgileri
+         ====================================================================== -->
+    <section class="profile-section" aria-labelledby="profile-heading">
+      <div class="wrap">
+        <div class="profile-header reveal" style="--d: 1;">
+          <h1 id="profile-heading" class="section-title profile-header-title">
+            Okur profili ve hesap bilgileri
+          </h1>
+          <p class="lead muted profile-header-lead">
+            Okuma arşivinizin güncel durumunu inceleyin ve kişisel hesap bilgilerinizi yönetin.
+          </p>
+        </div>
+
+        <div class="profile-workspace">
+          <!-- Üst Bölüm: Okunmuş Kitap ve Okunacak Kitap Sayaçları -->
+          <div class="profile-stats-grid" aria-label="Okuma istatistikleri">
+            <article class="profile-stat-card reveal" style="--d: 2;">
+              <div class="profile-stat-body">
+                <div class="profile-stat-info">
+                  <h2 class="card-title">Okunmuş Kitap</h2>
+                  <p class="small muted">Kütüphanem arşivine kaydettiğiniz tamamlanmış eser sayısı</p>
+                </div>
+                <strong class="profile-stat-number nums" id="profile-read-count">14</strong>
+              </div>
+              <div class="profile-stat-foot">
+                <span>Kütüphanem Arşivi</span>
+                <a href="kutuphanem.html" class="catalog-card-action">Okunan Kitapları Gör</a>
+              </div>
+            </article>
+
+            <article class="profile-stat-card reveal" style="--d: 3;">
+              <div class="profile-stat-body">
+                <div class="profile-stat-info">
+                  <h2 class="card-title">Okunacak Kitap</h2>
+                  <p class="small muted">Sonra Okuyacaklarım listenizde sıraya aldığınız eser sayısı</p>
+                </div>
+                <strong class="profile-stat-number nums" id="profile-to-read-count">6</strong>
+              </div>
+              <div class="profile-stat-foot">
+                <span>Sonra Okuyacaklarım</span>
+                <a href="sonra-okuyacaklarim.html" class="catalog-card-action">Okuma Listesini Gör</a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Alt Bölüm: İsim, Soyisim, E-posta ve Şifre Formu -->
+          <form action="/profil" method="POST" class="profile-form-panel reveal" id="profile-form" style="--d: 4;">
+            <div class="profile-form-body">
+              <div class="profile-form-head">
+                <h2 class="card-title">Kişisel Bilgiler</h2>
+                <p class="small muted">Hesabınıza tanımlı isim, soyisim, e-posta ve şifre bilgilerinizi güncelleyebilirsiniz.</p>
+              </div>
+
+              <div class="profile-fields-grid">
+                <div class="field-group profile-field-col">
+                  <label for="profile-first-name" class="field-label">İsim</label>
+                  <input
+                    type="text"
+                    id="profile-first-name"
+                    name="isim"
+                    class="field-input"
+                    value="Berke"
+                    placeholder="İsminiz"
+                    autocomplete="given-name"
+                    required
+                  >
+                </div>
+
+                <div class="field-group profile-field-col">
+                  <label for="profile-last-name" class="field-label">Soyisim</label>
+                  <input
+                    type="text"
+                    id="profile-last-name"
+                    name="soyisim"
+                    class="field-input"
+                    value="Akyüz"
+                    placeholder="Soyisminiz"
+                    autocomplete="family-name"
+                    required
+                  >
+                </div>
+
+                <div class="field-group profile-field-col">
+                  <label for="profile-email" class="field-label">E-posta</label>
+                  <input
+                    type="email"
+                    id="profile-email"
+                    name="eposta"
+                    class="field-input"
+                    value="berkeakz67@gmail.com"
+                    placeholder="ornek@kutuphane.org"
+                    autocomplete="email"
+                    required
+                  >
+                </div>
+
+                <div class="field-group profile-field-col">
+                  <div class="field-label-row">
+                    <label for="profile-password" class="field-label">Şifre</label>
+                    <span id="profile-password-hint" class="field-hint">En az 8 karakter</span>
+                  </div>
+                  <input
+                    type="password"
+                    id="profile-password"
+                    name="sifre"
+                    class="field-input"
+                    value="********"
+                    placeholder="Yeni şifreniz"
+                     minlength="8"
+                    aria-describedby="profile-password-hint"
+                    autocomplete="new-password"
+                    required
+                  >
+                </div>
+              </div>
+
+              <div class="auth-feedback" id="profile-feedback" role="status"></div>
+            </div>
+
+            <div class="profile-form-foot">
+              <span class="small muted">Değişiklikler kaydedildiğinde okur hesabınıza anında yansır.</span>
+              <button type="submit" class="btn">Bilgileri Güncelle</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       3. FOOTER: Altbilgi
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <!-- Marka ve Misyon Sütunu -->
+        <div class="footer-brand-block">
+          <div class="footer-monument">E-Kütüphane</div>
+          <p>
+            Okurlar için tasarlanmış kişisel kitap arşivi, okuma listesi planlayıcısı ve edebi katalog platformu. Okuduğunuz her kitap ve aldığınız her not kendi rafında güvende kalır.
+          </p>
+          <div class="footer-status-box">
+            <strong>Katalog ve Arşiv Durumu</strong>
+            <span class="nums">14.800+ kitap künyesi, yazar dizini ve kişisel raf yönetimi</span>
+          </div>
+        </div>
+
+        <!-- Sütun 1: Okur Menüsü -->
+        <div class="footer-nav-col">
+          <h3 class="footer-col-title">Okur Menüsü</h3>
+          <ul class="footer-list">
+            <li><a href="anasayfa.html">Anasayfa</a></li>
+            <li><a href="profil.html">Profil</a></li>
+            <li><a href="kutuphanem.html">Kütüphanem (Okunanlar)</a></li>
+            <li><a href="sonra-okuyacaklarim.html">Sonra Okuyacaklarım</a></li>
+            <li><a href="anasayfa.html#book-search-input">Kitap Arama</a></li>
+          </ul>
+        </div>
+
+        <!-- Sütun 2: Edebi Koleksiyonlar -->
+        <div class="footer-nav-col">
+          <h3 class="footer-col-title">Koleksiyonlar</h3>
+          <ul class="footer-list">
+            <li><a href="?kategori=turk-edebiyati">Türk Edebiyatı Klasikleri</a></li>
+            <li><a href="?kategori=dunya-klasikleri">Dünya Edebiyatı</a></li>
+            <li><a href="?kategori=tarih">Tarih ve Cumhuriyet Arşivi</a></li>
+            <li><a href="?kategori=felsefe">Felsefe ve Düşünce</a></li>
+            <li><a href="?kategori=bilim">Bilim ve İnceleme</a></li>
+          </ul>
+        </div>
+
+        <!-- Sütun 3: Oturum ve İletişim -->
+        <div class="footer-contact-col">
+          <h3 class="footer-col-title">Okur Oturumu ve İletişim</h3>
+          <p>
+            Aktif okur oturumunuz üzerinden okuduğunuz kitapları arşivleyebilir ve okuma listenizi yönetebilirsiniz.
+          </p>
+          <div class="auth-actions">
+            <a href="anasayfa.html" class="btn btn--parchment">Anasayfaya Dön</a>
+            <a href="index.html" class="btn btn--ghost-dark">Çıkış Yap</a>
+          </div>
+          <p class="small">
+            İletişim ve Katalog Önerileri: <a href="mailto:berkeakz67@gmail.com" style="text-decoration:underline;text-underline-offset:0.18em;">berkeakz67@gmail.com</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="nums">2026 E-Kütüphane Dijital Arşiv ve Okuma Platformu. Tüm hakları saklıdır.</span>
+        <span>Görsel Kaynakları: Wikimedia Commons (Kamu Malı Arşiv) ve Unsplash Açık Kütüphane Koleksiyonu</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

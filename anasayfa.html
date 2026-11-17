@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#22140d">
+  <title>Anasayfa · E-Kütüphane</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. HEADER: Giriş Sonrası Gezinme
+       (Anasayfa, Profil, Kütüphanem, Sonra Okuyacaklarım)
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="anasayfa.html" class="brand" aria-label="E-Kütüphane Anasayfa">
+        <span>E-Kütüphane</span>
+        <span class="brand-sub">Kişisel Kitap ve Okuma Arşivi</span>
+      </a>
+
+      <div class="header-right">
+        <nav class="nav-links" aria-label="Okur menüsü">
+          <a href="anasayfa.html" class="nav-link is-active" aria-current="page">Anasayfa</a>
+          <a href="profil.html" class="nav-link">Profil</a>
+          <a href="kutuphanem.html" class="nav-link" title="Okuduğunuz kitaplar">Kütüphanem</a>
+          <a href="sonra-okuyacaklarim.html" class="nav-link" title="Okumak istediğiniz kitapların listesi">Sonra Okuyacaklarım</a>
+        </nav>
+
+        <div class="auth-actions">
+          <a href="index.html" class="btn btn--ghost-dark">Çıkış Yap</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         2. KARŞILAMA VE CANLI KİTAP ARAMA BÖLÜMÜ (HERO)
+         ====================================================================== -->
+    <section class="hero" aria-labelledby="welcome-heading">
+      <div class="hero-media">
+        <img
+          src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1920&q=85"
+          onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1920&q=85';"
+          alt="Ahşap raflarda dizili binlerce ciltli kitaptan oluşan klasik kütüphane salonu"
+        >
+      </div>
+      <div class="hero-scrim" aria-hidden="true"></div>
+
+      <div class="wrap hero-content">
+        <div class="hero-stage">
+          <h1 id="welcome-heading" class="display-title reveal" style="--d: 1;">
+            Kütüphanenize hoş geldiniz
+          </h1>
+
+          <p class="lead reveal" style="--d: 2;">
+            Arşivde yeni eserler arayın, okuduğunuz kitapları <strong>Kütüphanem</strong> bölümüne ekleyin veya okumak istediğiniz eserleri <strong>Sonra Okuyacaklarım</strong> listenizde planlayın.
+          </p>
+
+          <!-- Oval (Pill) Kitap Arama Kutusu (Yazdıkça Sonuç Çıkarır) -->
+          <div class="hero-search-wrap reveal" id="hero-search-wrap" style="--d: 3;">
+            <form action="/ara" method="GET" role="search" id="hero-search-form">
+              <div class="pill-search-bar">
+                <span class="pill-search-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <line x1="20" y1="20" x2="16.2" y2="16.2"></line>
+                  </svg>
+                </span>
+
+                <label for="book-search-input" class="sr-only">Kitap, yazar veya konu ara</label>
+                <input
+                  type="search"
+                  id="book-search-input"
+                  name="q"
+                  class="pill-search-input"
+                  placeholder="Kitap, yazar veya konu ara..."
+                  autocomplete="off"
+                >
+
+                <button type="submit" class="pill-search-trigger" aria-label="Kitap Ara">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2L14.6 9.4L22 12L14.6 14.6L12 22L9.4 14.6L2 12L9.4 9.4L12 2Z"></path>
+                  </svg>
+                </button>
+              </div>
+            </form>
+
+            <!-- Yalnızca kullanıcı arama kutusuna yazdığında açılan sonuç listesi -->
+            <div class="search-dropdown" id="search-dropdown" aria-live="polite" hidden>
+              <div class="search-dropdown-head">
+                <span id="search-status-text">Arama sonuçları</span>
+                <span class="nums" id="search-count-text">0 sonuç</span>
+              </div>
+              <div class="search-dropdown-list" id="search-dropdown-list"></div>
+            </div>
+          </div>
+
+          <div class="hero-actions reveal" style="--d: 4;">
+            <a href="kutuphanem.html" class="btn btn--parchment">Kütüphaneme Git</a>
+            <a href="sonra-okuyacaklarim.html" class="btn btn--ghost-dark">Sonra Okuyacaklarım</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       3. FOOTER: Altbilgi
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <!-- Marka ve Misyon Sütunu -->
+        <div class="footer-brand-block">
+          <div class="footer-monument">E-Kütüphane</div>
+          <p>
+            Okurlar için tasarlanmış kişisel kitap arşivi, okuma listesi planlayıcısı ve edebi katalog platformu. Okuduğunuz her kitap ve aldığınız her not kendi rafında güvende kalır.
+          </p>
+          <div class="footer-status-box">
+            <strong>Katalog ve Arşiv Durumu</strong>
+            <span class="nums">14.800+ kitap künyesi, yazar dizini ve kişisel raf yönetimi</span>
+          </div>
+        </div>
+
+        <!-- Sütun 1: Okur Menüsü -->
+        <div class="footer-nav-col">
+          <h3 class="footer-col-title">Okur Menüsü</h3>
+          <ul class="footer-list">
+            <li><a href="anasayfa.html">Anasayfa</a></li>
+            <li><a href="profil.html">Profil</a></li>
+            <li><a href="kutuphanem.html">Kütüphanem (Okunanlar)</a></li>
+            <li><a href="sonra-okuyacaklarim.html">Sonra Okuyacaklarım</a></li>
+            <li><a href="#book-search-input">Kitap Arama</a></li>
+          </ul>
+        </div>
+
+        <!-- Sütun 2: Edebi Koleksiyonlar -->
+        <div class="footer-nav-col">
+          <h3 class="footer-col-title">Koleksiyonlar</h3>
+          <ul class="footer-list">
+            <li><a href="?kategori=turk-edebiyati">Türk Edebiyatı Klasikleri</a></li>
+            <li><a href="?kategori=dunya-klasikleri">Dünya Edebiyatı</a></li>
+            <li><a href="?kategori=tarih">Tarih ve Cumhuriyet Arşivi</a></li>
+            <li><a href="?kategori=felsefe">Felsefe ve Düşünce</a></li>
+            <li><a href="?kategori=bilim">Bilim ve İnceleme</a></li>
+          </ul>
+        </div>
+
+        <!-- Sütun 3: Oturum ve İletişim -->
+        <div class="footer-contact-col">
+          <h3 class="footer-col-title">Okur Oturumu ve İletişim</h3>
+          <p>
+            Aktif okur oturumunuz üzerinden okuduğunuz kitapları arşivleyebilir ve okuma listenizi yönetebilirsiniz.
+          </p>
+          <div class="auth-actions">
+            <a href="profil.html" class="btn btn--parchment">Profilim</a>
+            <a href="index.html" class="btn btn--ghost-dark">Çıkış Yap</a>
+          </div>
+          <p class="small">
+            İletişim ve Katalog Önerileri: <a href="mailto:berkeakz67@gmail.com" style="text-decoration:underline;text-underline-offset:0.18em;">berkeakz67@gmail.com</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="nums">2026 E-Kütüphane Dijital Arşiv ve Okuma Platformu. Tüm hakları saklıdır.</span>
+        <span>Görsel Kaynakları: Wikimedia Commons (Kamu Malı Arşiv) ve Unsplash Açık Kütüphane Koleksiyonu</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

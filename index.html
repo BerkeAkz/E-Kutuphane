@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#22140d">
+  <title>E-Kütüphane · Kişisel Kitap Arşivi ve Okuma Platformu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. HEADER: Sol Tarafta Marka, Sağ Tarafta Gezinme ve Giriş / Kayıt
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="index.html" class="brand" aria-label="E-Kütüphane Anasayfa">
+        <span>E-Kütüphane</span>
+        <span class="brand-sub">Kişisel Kitap ve Okuma Arşivi</span>
+      </a>
+
+      <div class="header-right">
+        <nav class="nav-links" aria-label="Ana gezinme">
+          <a href="#ozellikler" class="nav-link">Özellikler</a>
+          <a href="#ataturk-sozu" class="nav-link">Okuma Kültürü</a>
+          <a href="#koleksiyon" class="nav-link">Arşiv Seçkisi</a>
+        </nav>
+
+        <div class="auth-actions">
+          <a href="/giris" class="btn btn--ghost-dark" data-auth-open="login">Giriş Yap</a>
+          <a href="/kayit" class="btn btn--parchment" data-auth-open="register">Kayıt Ol</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         2. HERO BÖLÜMÜ:
+         - Kütüphane Görseli
+         - 2. Görseldeki Başlık, Açıklama ve Aksiyon Butonları
+         - 1. Görseldeki Oval (Pill) Kitap Arama Çubuğu (Yalnızca yazdıkça açılır)
+         ====================================================================== -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-media">
+        <img
+          src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1920&q=85"
+          onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1920&q=85';"
+          alt="Ahşap raflarda dizili binlerce ciltli kitaptan oluşan klasik kütüphane salonu"
+        >
+      </div>
+      <div class="hero-scrim" aria-hidden="true"></div>
+
+      <div class="wrap hero-content">
+        <div class="hero-stage">
+          <h1 id="hero-heading" class="display-title reveal" style="--d: 1;">
+            Kişisel kütüphaneniz ve edebi arşiviniz
+          </h1>
+
+          <p class="lead reveal" style="--d: 2;">
+            Okuduğunuz kitapları kendi kütüphanenize kaydedin, okumak istediğiniz eserlerle okuma listenizi planlayın ve geniş katalogda anında arama yapın.
+          </p>
+
+          <!-- 1. Görseldeki Şekilde Oval (Pill) Arama Kutusu (Yazdıkça Sonuç Çıkarır) -->
+          <div class="hero-search-wrap reveal" id="hero-search-wrap" style="--d: 3;">
+            <form action="/ara" method="GET" role="search" id="hero-search-form">
+              <div class="pill-search-bar">
+                <span class="pill-search-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <line x1="20" y1="20" x2="16.2" y2="16.2"></line>
+                  </svg>
+                </span>
+
+                <label for="book-search-input" class="sr-only">Kitap, yazar veya konu ara</label>
+                <input
+                  type="search"
+                  id="book-search-input"
+                  name="q"
+                  class="pill-search-input"
+                  placeholder="Kitap, yazar veya konu ara..."
+                  autocomplete="off"
+                >
+
+                <button type="submit" class="pill-search-trigger" aria-label="Kitap Ara">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2L14.6 9.4L22 12L14.6 14.6L12 22L9.4 14.6L2 12L9.4 9.4L12 2Z"></path>
+                  </svg>
+                </button>
+              </div>
+            </form>
+
+            <!-- Yalnızca kullanıcı arama kutusuna yazdığında açılan sonuç listesi -->
+            <div class="search-dropdown" id="search-dropdown" aria-live="polite" hidden>
+              <div class="search-dropdown-head">
+                <span id="search-status-text">Arama sonuçları</span>
+                <span class="nums" id="search-count-text">0 sonuç</span>
+              </div>
+              <div class="search-dropdown-list" id="search-dropdown-list"></div>
+            </div>
+          </div>
+
+          <!-- 2. Görseldeki Buton Yapısı -->
+          <div class="hero-actions reveal" style="--d: 4;">
+            <a href="/kayit" class="btn btn--parchment" data-auth-open="register">Kendi Kütüphaneni Oluştur</a>
+            <a href="#ozellikler" class="btn btn--ghost-dark">Nasıl Çalışır?</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         3. SAYFAYI TANITAN 4 KÜÇÜK PROFESYONEL KART
+         ====================================================================== -->
+    <section id="ozellikler" class="section" aria-labelledby="features-title">
+      <div class="wrap">
+        <div class="intro-cards-header reveal" style="--d: 1;">
+          <h2 id="features-title" class="section-title">Okuma düzeninizi kurmanız için dört temel olanak</h2>
+          <p class="lead muted">
+            Fiziksel kütüphanenizin sıcaklığını ve düzenini koruyarak okuma serüveninizi kayıt altına alın.
+          </p>
+        </div>
+
+        <div class="intro-cards-grid">
+          <!-- Kart 1: Kişisel Profil Oluşturma -->
+          <article class="catalog-card reveal" style="--d: 1;">
+            <div>
+              <figure class="catalog-card-media">
+                <img
+                  src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=700&q=80"
+                  alt="Ahşap çalışma masasında açık duran klasik kitap sayfaları ve not defteri"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="catalog-card-body">
+                <h3 class="card-title">Kişisel Okur Profili</h3>
+                <p>
+                  Kendi okur profilinizi oluşturun. Okuma geçmişinizi, yıllık kitap hedeflerinizi, ilgi duyduğunuz edebi türleri ve kişisel okuma istatistiklerinizi profesyonel bir kimlikle tek sayfada yönetin.
+                </p>
+              </div>
+            </div>
+            <div class="catalog-card-foot">
+              <span>Okur Kimliği</span>
+              <a href="/profil" class="catalog-card-action" data-auth-open="register">Profil Oluştur</a>
+            </div>
+          </article>
+
+          <!-- Kart 2: Okunan Kitapları Kütüphaneye Ekleme -->
+          <article class="catalog-card reveal" style="--d: 2;">
+            <div>
+              <figure class="catalog-card-media">
+                <img
+                  src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=700&q=80"
+                  alt="Kütüphane rafında yan yana dizilmiş ciltli edebi eserler"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="catalog-card-body">
+                <h3 class="card-title">Kişisel Kütüphane Arşivi</h3>
+                <p>
+                  Okuduğunuz kitapları kendi kütüphanenize ekleyin. Bitirdiğiniz her eseri okuma tarihi, kişisel inceleme notlarınız ve unutulmaz alıntılarınızla birlikte kalıcı dijital rafınıza kaydedin.
+                </p>
+              </div>
+            </div>
+            <div class="catalog-card-foot">
+              <span>Okunan Eserler</span>
+              <a href="#koleksiyon" class="catalog-card-action">Kütüphaneye Ekle</a>
+            </div>
+          </article>
+
+          <!-- Kart 3: Okunacak Kitapları Okuma Listesine Ekleme -->
+          <article class="catalog-card reveal" style="--d: 3;">
+            <div>
+              <figure class="catalog-card-media">
+                <img
+                  src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=700&q=80"
+                  alt="Okuma sırası için ayrılmış kitaplar ve alınan planlama notları"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="catalog-card-body">
+                <h3 class="card-title">Okuma Listesi Planlama</h3>
+                <p>
+                  Okumak istediğiniz kitapları kendi okuma listenize ekleyin. Sıradaki okumalarınızı önceliklendirin, kendinize özel okuma kuyrukları hazırlayın ve merak ettiğiniz hiçbir eseri gözden kaçırmayın.
+                </p>
+              </div>
+            </div>
+            <div class="catalog-card-foot">
+              <span>Okunacaklar Sırası</span>
+              <a href="#koleksiyon" class="catalog-card-action">Liste Hazırla</a>
+            </div>
+          </article>
+
+          <!-- Kart 4: Kitap Araması Yapabilme -->
+          <article class="catalog-card reveal" style="--d: 4;">
+            <div>
+              <figure class="catalog-card-media">
+                <img
+                  src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=700&q=80"
+                  alt="Geniş kütüphane arşivinde katalog taraması ve kitap rafları"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="catalog-card-body">
+                <h3 class="card-title">Kapsamlı Kitap Araması</h3>
+                <p>
+                  Zengin katalog üzerinden detaylı kitap araması yapın. Eser adı, yazar, dönem, edebi tür veya konu başlığıyla binlerce kitabı saniyeler içinde tarayın ve künye detaylarını inceleyin.
+                </p>
+              </div>
+            </div>
+            <div class="catalog-card-foot">
+              <span>Katalog Sorgulama</span>
+              <a href="#book-search-input" class="catalog-card-action">Aramaya Geç</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         4. ATATÜRK'ÜN KİTAP ÜZERİNE SÖZÜ
+         ====================================================================== -->
+    <section id="ataturk-sozu" class="ataturk-section" aria-labelledby="ataturk-heading">
+      <div class="wrap ataturk-grid">
+        <div class="ataturk-copy reveal" style="--d: 1;">
+          <h2 id="ataturk-heading" class="section-title">Kitapla kurulan bir düşünce mirası</h2>
+
+          <blockquote class="ataturk-quote">
+            “Ben çocukken yoksuldum. İki kuruş elime geçince bunun bir kuruşunu kitaba verirdim. Eğer böyle olmasaydım, bu yaptıklarımın hiçbirisini yapamazdım.”
+          </blockquote>
+
+          <div class="ataturk-attribution">
+            <cite class="ataturk-name">Mustafa Kemal Atatürk</cite>
+            <p class="ataturk-note">
+              Yaşamı boyunca dört binden fazla eseri okuyan, satır altlarını çizen ve kenar notlarıyla zenginleştirdiği kütüphanesini millete miras bırakan bir okuma tutkusu.
+            </p>
+          </div>
+        </div>
+
+        <div class="ataturk-portrait-col reveal" style="--d: 2;">
+          <figure class="ataturk-figure">
+            <img
+              src="ataturk_images.jpg"
+              alt="Mustafa Kemal Atatürk, 1930'lu yıllar arşiv portresi"
+              loading="lazy"
+            >
+            <figcaption class="ataturk-figcaption">
+              <span>Cumhuriyet Arşivi Koleksiyonu</span>
+              <span class="nums">1930</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. ARŞİV SEÇKİSİ VE ETKİLEŞİMLİ KÜTÜPHANE / OKUMA LİSTESİ DENEYİMİ
+         ====================================================================== -->
+    <section id="koleksiyon" class="section" aria-labelledby="shelf-heading">
+      <div class="wrap">
+        <div class="shelf-header reveal" style="--d: 1;">
+          <div class="shelf-header-copy">
+            <h2 id="shelf-heading" class="section-title">Arşivden seçkin eserleri rafınıza ekleyin</h2>
+            <p class="lead muted">
+              Okuduğunuz kitapları kütüphanenize, okumak istediklerinizi ise okuma listenize tek tıkla kaydedin.
+            </p>
+          </div>
+
+          <div class="shelf-counter-box" aria-live="polite">
+            <div class="counter-stat">
+              <strong class="nums" id="library-count">2</strong>
+              <span class="small muted">Kütüphanemdeki Kitap</span>
+            </div>
+            <div class="counter-stat">
+              <strong class="nums" id="watchlist-count">2</strong>
+              <span class="small muted">Okuma Listemdeki Kitap</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="shelf-grid">
+          <!-- Kitap 1 -->
+          <article class="book-specimen reveal" style="--d: 1;">
+            <div>
+              <figure class="book-specimen-cover">
+                <img
+                  src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=700&q=80"
+                  alt="Kürk Mantolu Madonna eseri için klasik ciltli kitap görünümü"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="book-specimen-body">
+                <span class="book-specimen-genre">Türk Edebiyatı · 1943</span>
+                <h3 class="card-title">Kürk Mantolu Madonna</h3>
+                <p class="book-specimen-author">Sabahattin Ali · 160 Sayfa</p>
+              </div>
+            </div>
+            <div class="book-specimen-actions">
+              <button type="button" class="book-action-btn is-active" data-shelf-action="library">Kütüphanemde</button>
+              <button type="button" class="book-action-btn" data-shelf-action="watchlist">Okuma Listem</button>
+            </div>
+          </article>
+
+          <!-- Kitap 2 -->
+          <article class="book-specimen reveal" style="--d: 2;">
+            <div>
+              <figure class="book-specimen-cover">
+                <img
+                  src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=700&q=80"
+                  alt="Saatleri Ayarlama Enstitüsü eseri için kitap seçkisi görünümü"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="book-specimen-body">
+                <span class="book-specimen-genre">Modern Klasik · 1961</span>
+                <h3 class="card-title">Saatleri Ayarlama Enstitüsü</h3>
+                <p class="book-specimen-author">Ahmet Hamdi Tanpınar · 382 Sayfa</p>
+              </div>
+            </div>
+            <div class="book-specimen-actions">
+              <button type="button" class="book-action-btn" data-shelf-action="library">Kütüphaneme Ekle</button>
+              <button type="button" class="book-action-btn is-active" data-shelf-action="watchlist">Listemde Ekli</button>
+            </div>
+          </article>
+
+          <!-- Kitap 3 -->
+          <article class="book-specimen reveal" style="--d: 3;">
+            <div>
+              <figure class="book-specimen-cover">
+                <img
+                  src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=700&q=80"
+                  alt="İnce Memed eseri için açık ciltli kitap sayfaları"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="book-specimen-body">
+                <span class="book-specimen-genre">Toplumcu Roman · 1955</span>
+                <h3 class="card-title">İnce Memed</h3>
+                <p class="book-specimen-author">Yaşar Kemal · 436 Sayfa</p>
+              </div>
+            </div>
+            <div class="book-specimen-actions">
+              <button type="button" class="book-action-btn is-active" data-shelf-action="library">Kütüphanemde</button>
+              <button type="button" class="book-action-btn" data-shelf-action="watchlist">Okuma Listem</button>
+            </div>
+          </article>
+
+          <!-- Kitap 4 -->
+          <article class="book-specimen reveal" style="--d: 4;">
+            <div>
+              <figure class="book-specimen-cover">
+                <img
+                  src="https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&fit=crop&w=700&q=80"
+                  alt="Çalıkuşu eseri için kütüphane masasında duran ciltli kitap"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="book-specimen-body">
+                <span class="book-specimen-genre">Cumhuriyet Klasikleri · 1922</span>
+                <h3 class="card-title">Çalıkuşu</h3>
+                <p class="book-specimen-author">Reşat Nuri Güntekin · 408 Sayfa</p>
+              </div>
+            </div>
+            <div class="book-specimen-actions">
+              <button type="button" class="book-action-btn" data-shelf-action="library">Kütüphaneme Ekle</button>
+              <button type="button" class="book-action-btn is-active" data-shelf-action="watchlist">Listemde Ekli</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       6. FOOTER: En Altta Zengin, Dolu ve Kütüphane Ruhu Taşıyan Altbilgi
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <!-- Marka ve Misyon Sütunu -->
+        <div class="footer-brand-block">
+          <div class="footer-monument">E-Kütüphane</div>
+          <p>
+            Okurlar için tasarlanmış kişisel kitap arşivi, okuma listesi planlayıcısı ve edebi katalog platformu. Okuduğunuz her kitap ve aldığınız her not kendi rafında güvende kalır.
+          </p>
+          <div class="footer-status-box">
+            <strong>Katalog ve Arşiv Durumu</strong>
+            <span class="nums">14.800+ kitap künyesi, yazar dizini ve kişisel raf yönetimi</span>
+          </div>
+        </div>
+
+        <!-- Sütun 1: Platform Özellikleri -->
+        <div class="footer-nav-col">
+          <h3 class="footer-col-title">Platform</h3>
+          <ul class="footer-list">
+            <li><a href="#book-search-input">Detaylı Kitap Arama</a></li>
+            <li><a href="#ozellikler">Kişisel Okur Profili</a></li>
+            <li><a href="#koleksiyon">Kütüphanem Arşivi</a></li>
+            <li><a href="#koleksiyon">Okuma Listem</a></li>
+            <li><a href="#ataturk-sozu">Okuma Kültürü</a></li>
+          </ul>
+        </div>
+
+        <!-- Sütun 2: Edebi Koleksiyonlar -->
+        <div class="footer-nav-col">
+          <h3 class="footer-col-title">Koleksiyonlar</h3>
+          <ul class="footer-list">
+            <li><a href="?kategori=turk-edebiyati">Türk Edebiyatı Klasikleri</a></li>
+            <li><a href="?kategori=dunya-klasikleri">Dünya Edebiyatı</a></li>
+            <li><a href="?kategori=tarih">Tarih ve Cumhuriyet Arşivi</a></li>
+            <li><a href="?kategori=felsefe">Felsefe ve Düşünce</a></li>
+            <li><a href="?kategori=bilim">Bilim ve İnceleme</a></li>
+          </ul>
+        </div>
+
+        <!-- Sütun 3: Hesap, İletişim ve Künye -->
+        <div class="footer-contact-col">
+          <h3 class="footer-col-title">Okur Hesabı ve İletişim</h3>
+          <p>
+            Kendi profilinizi oluşturmak, okuduğunuz kitapları arşivlemek ve okuma listelerinizi kaydetmek için ücretsiz hesabınızı açabilirsiniz.
+          </p>
+          <div class="auth-actions">
+            <a href="/giris" class="btn btn--ghost-dark" data-auth-open="login">Giriş Yap</a>
+            <a href="/kayit" class="btn btn--parchment" data-auth-open="register">Kayıt Ol</a>
+          </div>
+          <p class="small">
+            İletişim ve Katalog Önerileri: <a href="mailto:berkeakz67@gmail.com" style="text-decoration:underline;text-underline-offset:0.18em;">berkeakz67@gmail.com</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="nums">2026 E-Kütüphane Dijital Arşiv ve Okuma Platformu. Tüm hakları saklıdır.</span>
+        <span>Görsel Kaynakları: Wikimedia Commons (Kamu Malı Arşiv) ve Unsplash Açık Kütüphane Koleksiyonu</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       7. GİRİŞ YAP / KAYIT OL MODAL PENCERESİ (Python Backend POST Hazır)
+       ======================================================================== -->
+  <div class="auth-modal-backdrop" id="auth-modal-backdrop" aria-hidden="true">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+      <div class="auth-modal-top">
+        <div>
+          <h2 id="auth-modal-title" class="card-title">Okur Hesabı</h2>
+          <p class="small muted">Kişisel kütüphanenize ve okuma listenize erişin.</p>
+        </div>
+        <button type="button" class="btn btn--surface" id="auth-modal-close" aria-label="Pencereyi kapat">Kapat</button>
+      </div>
+
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="auth-tab is-active" role="tab" aria-selected="true" data-auth-tab="login">Giriş Yap</button>
+        <button type="button" class="auth-tab" role="tab" aria-selected="false" data-auth-tab="register">Kayıt Ol</button>
+      </div>
+
+      <!-- Python Backend Giriş Formu (POST /giris) -->
+      <form action="/giris" method="POST" class="auth-form" id="login-form">
+        <div class="field-group">
+          <label for="login-email" class="field-label">E-posta veya Kullanıcı Adı</label>
+          <input type="text" id="login-email" name="kullanici" class="field-input" placeholder="ornek@kutuphane.org" required>
+        </div>
+        <div class="field-group">
+          <label for="login-password" class="field-label">Parola</label>
+          <input type="password" id="login-password" name="parola" class="field-input" placeholder="En az 8 karakter" required>
+        </div>
+        <button type="submit" class="btn">Giriş Yap</button>
+      </form>
+
+      <!-- Python Backend Kayıt Formu (POST /kayit) -->
+      <form action="/kayit" method="POST" class="auth-form" id="register-form" hidden>
+        <div class="field-group">
+          <label for="reg-name" class="field-label">Ad Soyad</label>
+          <input type="text" id="reg-name" name="ad_soyad" class="field-input" placeholder="Adınız ve Soyadınız" required>
+        </div>
+        <div class="field-group">
+          <label for="reg-username" class="field-label">Okur Profili Kullanıcı Adı</label>
+          <input type="text" id="reg-username" name="kullanici_adi" class="field-input" placeholder="okur_adi" required>
+        </div>
+        <div class="field-group">
+          <label for="reg-email" class="field-label">E-posta Adresi</label>
+          <input type="email" id="reg-email" name="eposta" class="field-input" placeholder="ornek@kutuphane.org" required>
+        </div>
+        <div class="field-group">
+          <label for="reg-password" class="field-label">Parola Belirleyin</label>
+          <input type="password" id="reg-password" name="parola" class="field-input" placeholder="En az 8 karakter" required>
+        </div>
+        <button type="submit" class="btn">Okur Profilimi Oluştur</button>
+      </form>
+
+      <div class="auth-feedback" id="auth-feedback" role="status"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
