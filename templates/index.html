@@ -17,7 +17,7 @@
        ======================================================================== -->
   <header class="site-header">
     <div class="wrap header-inner">
-      <a href="index.html" class="brand" aria-label="E-Kütüphane Anasayfa">
+      <a href="{{ url_for('index') }}" class="brand" aria-label="E-Kütüphane Anasayfa">
         <span>E-Kütüphane</span>
         <span class="brand-sub">Kişisel Kitap ve Okuma Arşivi</span>
       </a>
@@ -30,7 +30,7 @@
         </nav>
 
         <div class="auth-actions">
-          <a href="/giris" class="btn btn--ghost-dark" data-auth-open="login">Giriş Yap</a>
+          <a href="{{ url_for('anasayfa') }}" class="btn btn--ghost-dark">Giriş Yap</a>
           <a href="/kayit" class="btn btn--parchment" data-auth-open="register">Kayıt Ol</a>
         </div>
       </div>
@@ -144,7 +144,7 @@
             </div>
             <div class="catalog-card-foot">
               <span>Okur Kimliği</span>
-              <a href="/profil" class="catalog-card-action" data-auth-open="register">Profil Oluştur</a>
+              <a href="{{ url_for('profil') }}" class="catalog-card-action" data-auth-open="register">Profil Oluştur</a>
             </div>
           </article>
 
@@ -243,7 +243,7 @@
         <div class="ataturk-portrait-col reveal" style="--d: 2;">
           <figure class="ataturk-figure">
             <img
-              src="image/ataturk_images.jpg"
+              src="static/image/ataturk_images.jpg"
               alt="Mustafa Kemal Atatürk, 1930'lu yıllar arşiv portresi"
               loading="lazy"
             >

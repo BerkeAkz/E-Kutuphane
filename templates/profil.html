@@ -18,21 +18,21 @@
        ======================================================================== -->
   <header class="site-header">
     <div class="wrap header-inner">
-      <a href="anasayfa.html" class="brand" aria-label="E-Kütüphane Anasayfa">
+      <a href="{{ url_for('anasayfa') }}" class="brand" aria-label="E-Kütüphane Anasayfa">
         <span>E-Kütüphane</span>
         <span class="brand-sub">Kişisel Kitap ve Okuma Arşivi</span>
       </a>
 
       <div class="header-right">
         <nav class="nav-links" aria-label="Okur menüsü">
-          <a href="anasayfa.html" class="nav-link">Anasayfa</a>
-          <a href="profil.html" class="nav-link is-active" aria-current="page">Profil</a>
-          <a href="kutuphanem.html" class="nav-link" title="Okuduğunuz kitaplar">Kütüphanem</a>
-          <a href="sonra-okuyacaklarim.html" class="nav-link" title="Okumak istediğiniz kitapların listesi">Sonra Okuyacaklarım</a>
+          <a href="{{ url_for('anasayfa') }}" class="nav-link">Anasayfa</a>
+          <a href="{{ url_for('profil') }}" class="nav-link is-active" aria-current="page">Profil</a>
+          <a href="{{ url_for('kutuphanem') }}" class="nav-link" title="Okuduğunuz kitaplar">Kütüphanem</a>
+          <a href="{{ url_for('sonra_okuyacaklarim') }}" class="nav-link" title="Okumak istediğiniz kitapların listesi">Sonra Okuyacaklarım</a>
         </nav>
 
         <div class="auth-actions">
-          <a href="index.html" class="btn btn--ghost-dark">Çıkış Yap</a>
+          <a href="{{ url_for('index') }}" class="btn btn--ghost-dark">Çıkış Yap</a>
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@
               </div>
               <div class="profile-stat-foot">
                 <span>Kütüphanem Arşivi</span>
-                <a href="kutuphanem.html" class="catalog-card-action">Okunan Kitapları Gör</a>
+                <a href="{{ url_for('kutuphanem') }}" class="catalog-card-action">Okunan Kitapları Gör</a>
               </div>
             </article>
 
@@ -83,7 +83,7 @@
               </div>
               <div class="profile-stat-foot">
                 <span>Sonra Okuyacaklarım</span>
-                <a href="sonra-okuyacaklarim.html" class="catalog-card-action">Okuma Listesini Gör</a>
+                <a href="{{ url_for('sonra_okuyacaklarim') }}" class="catalog-card-action">Okuma Listesini Gör</a>
               </div>
             </article>
           </div>
@@ -194,11 +194,11 @@
         <div class="footer-nav-col">
           <h3 class="footer-col-title">Okur Menüsü</h3>
           <ul class="footer-list">
-            <li><a href="anasayfa.html">Anasayfa</a></li>
-            <li><a href="profil.html">Profil</a></li>
-            <li><a href="kutuphanem.html">Kütüphanem (Okunanlar)</a></li>
-            <li><a href="sonra-okuyacaklarim.html">Sonra Okuyacaklarım</a></li>
-            <li><a href="anasayfa.html#book-search-input">Kitap Arama</a></li>
+            <li><a href="{{ url_for('anasayfa') }}">Anasayfa</a></li>
+            <li><a href="{{ url_for('profil') }}">Profil</a></li>
+            <li><a href="{{ url_for('kutuphanem') }}">Kütüphanem (Okunanlar)</a></li>
+            <li><a href="{{ url_for('sonra_okuyacaklarim') }}">Sonra Okuyacaklarım</a></li>
+            <li><a href="{{ url_for('anasayfa') }}#book-search-input">Kitap Arama</a></li>
           </ul>
         </div>
 
@@ -221,8 +221,8 @@
             Aktif okur oturumunuz üzerinden okuduğunuz kitapları arşivleyebilir ve okuma listenizi yönetebilirsiniz.
           </p>
           <div class="auth-actions">
-            <a href="anasayfa.html" class="btn btn--parchment">Anasayfaya Dön</a>
-            <a href="index.html" class="btn btn--ghost-dark">Çıkış Yap</a>
+            <a href="{{ url_for('anasayfa') }}" class="btn btn--parchment">Anasayfaya Dön</a>
+            <a href="{{ url_for('index') }}" class="btn btn--ghost-dark">Çıkış Yap</a>
           </div>
           <p class="small">
             İletişim ve Katalog Önerileri: <a href="mailto:berkeakz67@gmail.com" style="text-decoration:underline;text-underline-offset:0.18em;">berkeakz67@gmail.com</a>
